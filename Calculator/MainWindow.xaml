@@ -1,0 +1,213 @@
+﻿<Window x:Class="Calculator.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:Calculator"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="500"
+        WindowStyle="None"
+        WindowStartupLocation="CenterScreen"
+        AllowsTransparency="True"
+        Background="MediumPurple">
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.ToggleButton.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+
+            <Style x:Key="MDIXButton" TargetType="Button" BasedOn="{StaticResource MaterialDesignActionToggleButton}">
+                <Style.Resources>
+                    <ResourceDictionary>
+                        <ResourceDictionary.MergedDictionaries>
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Light.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Primary/MaterialDesignColor.DeepPurple.xaml" />
+                            <ResourceDictionary Source="pack://application:,,,/MaterialDesignColors;component/Themes/Recommended/Accent/MaterialDesignColor.Lime.xaml" />
+                        </ResourceDictionary.MergedDictionaries>
+                    </ResourceDictionary>
+                </Style.Resources>
+            </Style>
+
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <materialDesign:Card UniformCornerRadius="25" Background="{DynamicResource MaterialDesignPaper}" materialDesign:ShadowAssist.ShadowDepth ="Depth5" Margin="25">
+
+        <Grid>
+            <Grid Width="50" Height="50" Margin="390,0,10,550">
+                <Button
+                IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                Style="{StaticResource MaterialDesignIconButton}"
+                ToolTip="Close" Click="close_Button">
+                    <materialDesign:PackIcon
+                Kind="Close"/>
+                </Button>
+            </Grid>
+            
+            <Label Width="210" Height="50" Content="КАЛЬКУЛЯТОР" FontSize="31" FontFamily="Candara Light" Margin="120,10,120,540"/>
+
+            <StackPanel Margin="10,65,10,473">
+                <TextBox
+                materialDesign:HintAssist.Hint="ВВЕДИТЕ ЧИСЛО"
+                materialDesign:TextFieldAssist.CharacterCounterVisibility="{Binding IsChecked, Converter={StaticResource BooleanToVisibilityConverter}, ElementName=MaterialDesignFilledTextBoxTextCountComboBox}"
+                MaxLength="10" FontSize="20" FontFamily="Random Grotesque Standart Book"
+                Style="{StaticResource MaterialDesignFilledTextBox}"
+                TextWrapping="Wrap" Height="60"
+                Name="TextBox_Screen" IsEnabled="True" Text="0"/>
+            </StackPanel>
+
+            <Grid Width="430" Height="30" Margin="10,132,40,438">
+                <TextBlock  FontSize="17" Foreground="LightGray" FontFamily="Random Grotesque Standart Book" Name="doubled_Screen"/>
+            </Grid>
+
+            <Grid Width="200" Height="230">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                    <ColumnDefinition />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Content="1" Background="MediumPurple" Grid.Column="0" Grid.Row="0" Click="number_Click" Name="NumberOne" />
+                <Button Content="2" Background="MediumPurple" Grid.Column="1" Grid.Row="0" Click="number_Click" Name="NumberTwo"/>
+                <Button Content="3" Background="MediumPurple" Grid.Column="2" Grid.Row="0" Click="number_Click" Name="NumberThree"/>
+                <Button Content="4" Background="MediumPurple" Grid.Column="0" Grid.Row="1" Click="number_Click" Name="NumberFour"/>
+                <Button Content="5" Background="MediumPurple" Grid.Column="1" Grid.Row="1" Click="number_Click" Name="NumberFive"/>
+                <Button Content="6" Background="MediumPurple" Grid.Column="2" Grid.Row="1" Click="number_Click" Name="NumberSix"/>
+                <Button Content="7" Background="MediumPurple" Grid.Column="0" Grid.Row="2" Click="number_Click" Name="NumberSeven"/>
+                <Button Content="8" Background="MediumPurple" Grid.Column="1" Grid.Row="2" Click="number_Click" Name="NumberEight"/>
+                <Button Content="9" Background="MediumPurple" Grid.Column="2" Grid.Row="2" Click="number_Click" Name="NumberNine"/>
+                <Button Content="," Background="MediumPurple" Grid.Column="0" Grid.Row="3" Click="dot_Click" Name="Dot"/>
+                <Button Content="0" Background="MediumPurple" Grid.Column="1" Grid.Row="3" Click="number_Click" Name="NumberZero"/>
+                <Button Content="+/-" Background="MediumPurple" Grid.Column="2" Grid.Row="3" Click="mark_Click" Name="markNumbers"/>
+            </Grid>
+
+            <Grid Width="100" Height="170" Margin="10,190,340,190">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button
+                    Content="M+"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="0"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="memory_Click" Name="memory_plus"/>
+
+                <Button
+                    Content="M-"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="1"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="memory_Click" Name="memory_subtraction"/>
+
+                <Button
+                    Content="MRC"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="2"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="memory_Click" Name="memory_show"/>
+
+                <Button
+                    Content="CE"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignOutlinedLightButton}"
+                    ToolTip="MaterialDesignOutlinedButton" Grid.Row="3"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="clean_Click"/>
+            </Grid>
+
+            <Grid Width="100" Height="170" Margin="340,190,10,190">
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button
+                    Content="sin"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="0"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="trigonometry_Click" Name="sin"/>
+
+                <Button
+                    Content="tan"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="1"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="trigonometry_Click" Name="tan"/>
+
+                <Button
+                    Content="cos"
+                    IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                    Style="{StaticResource MaterialDesignPaperDarkButton}"
+                    ToolTip="Resource name: MaterialDesignPaperDarkButton" Grid.Row="2"
+                    FontFamily="Times New Roman" FontWeight="ExtraBold"
+                    Click="trigonometry_Click" Name="cos"/>
+
+                <Grid
+                Width="100" Grid.RowSpan="2" Grid.Row="1">
+                    <Button
+                     materialDesign:ButtonProgressAssist.IsIndeterminate="True"
+                     materialDesign:ButtonProgressAssist.IsIndicatorVisible="True"
+                     materialDesign:ButtonProgressAssist.Value="-1"
+                     Content="="
+                     IsEnabled="{Binding DataContext.ControlsEnabled, RelativeSource={RelativeSource FindAncestor, AncestorType=Window}}"
+                     Style="{StaticResource MaterialDesignRaisedButton}" 
+                     FontFamily="Times New Roman" FontWeight="ExtraBold"
+                     Click="equals_Click" Name="equals" Margin="0,91,0,-38"/>
+                </Grid>
+
+            </Grid>
+
+            <Grid Width="430" Height="100" Margin="10,441,10,59">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+              
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <Button Content="+" Background="MediumPurple" Grid.Column="0" Grid.Row="0" Click="twoOperandOperations_Click" Name="plus"/>
+                <Button Content="-" Background="MediumPurple" Grid.Column="1" Grid.Row="0" Click="twoOperandOperations_Click" Name="subtraction"/>
+                <Button Content="x" Background="MediumPurple" Grid.Column="2" Grid.Row="0" Click="twoOperandOperations_Click" Name="multiplication"/>
+                <Button Content="/" Background="MediumPurple" Grid.Column="3" Grid.Row="0" Click="twoOperandOperations_Click" Name="division"/>
+                <Button Content="!n" Background="MediumPurple" Grid.Column="4" Grid.Row="0" Click="oneOperandOperations_Click" Name="factorial"/>
+                <Button Content="√" Background="MediumPurple" Grid.Column="0" Grid.Row="1" Click="oneOperandOperations_Click" Name="sqrt"/>
+                <Button Content="%" Background="MediumPurple" Grid.Column="1" Grid.Row="1" Click="twoOperandOperations_Click" Name="percent"/>
+                <Button Content="x^2" Background="MediumPurple" Grid.Column="2" Grid.Row="1" Click="oneOperandOperations_Click" Name="square"/>
+                <Button Content="X√" Background="MediumPurple" Grid.Column="3" Grid.Row="1" Click="twoOperandOperations_Click" Name="sqrtX"/>
+                <Button Content="x^y" Background="MediumPurple" Grid.Column="4" Grid.Row="1" Click="twoOperandOperations_Click" Name="degree"/>
+            </Grid>
+
+           
+
+        </Grid>
+
+       
+
+    </materialDesign:Card>
+</Window>
